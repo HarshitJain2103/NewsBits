@@ -1,0 +1,71 @@
+{
+    "status": "ok",
+    "totalResults": 5,
+    "articles": [
+        {
+            "source": {
+                "id": "cbc-news",
+                "name": "CBC News"
+            },
+            "author": "CBC News",
+            "title": "Paralympic newsletter: Canada wins its first two medals, plus who to watch on Friday | CBC Sports",
+            "description": "CBC Sports' daily newsletter recaps a successful first day of competition for Canada at the Paris Paralympics, and looks ahead to the medal contenders on Day 2.",
+            "url": "http://www.cbc.ca/sports/paralympics/the-buzzer-newsletter-aug-29-1.7308792",
+            "urlToImage": "https://i.cbc.ca/1.7308796.1724965617!/fileImage/httpImage/image.jpg_gen/derivatives/16x9_620/obrien-kate-082924.jpg",
+            "publishedAt": "2024-08-29T23:37:17.7846992Z",
+            "content": "This is a web version of CBC Sports' daily newsletter, The Buzzer. Sign up here to get it delivered to your inbox.\r\nCanada won its first two medals of the Paralympic Games\r\nTrack cyclist Kate O'Brien… [+6057 chars]"
+        },
+        {
+            "source": {
+                "id": "cbc-news",
+                "name": "CBC News"
+            },
+            "author": "CBC News",
+            "title": "Ilona Maher is Sports Illustrated's latest swimsuit cover model. Will that change how we judge women's bodies? | CBC News",
+            "description": "Fresh off a medal-winning performance with her rugby team in the Paris Olympics, U.S. athlete Ilona Maher is making new waves as the latest cover model for Sports Illustrated’s swimsuit digital edition, sparking conversation about disrupting narrow beauty sta…",
+            "url": "http://www.cbc.ca/news/world/sports-illustrated-ilona-maher-1.7308679",
+            "urlToImage": "https://i.cbc.ca/1.7308749.1724966165!/fileImage/httpImage/image.JPG_gen/derivatives/16x9_620/sports-illustrated-screen-shot.JPG",
+            "publishedAt": "2024-08-29T22:52:13.7973893Z",
+            "content": "Fresh off a medal win with her team in the Paris Olympics, U.S. rugby star Ilona Maher is making new waves as the latest digital cover model for Sports Illustrated's swimsuit edition. \r\nThe 28-year-o… [+4595 chars]"
+        },
+        {
+            "source": {
+                "id": "fox-sports",
+                "name": "Fox Sports"
+            },
+            "author": "John Fanta, Michael Cohen",
+            "title": "College basketball roundtable: Michigan State's tourney streak, top transfers and more",
+            "description": "Is Michigan State's NCAA Tournament streak in jeopardy? Who is the top transfer in the nation? FOX Sports' college basketball experts answer that and more.",
+            "url": "http://www.foxsports.com/stories/college-basketball/college-basketball-roundtable-michigan-states-tourney-streak-top-transfers-and-more",
+            "urlToImage": "https://a57.foxsports.com/statics.foxsports.com/www.foxsports.com/content/uploads/2024/02/1408/814/2024-02-29_College-Basketball-Roundtable_16x9.jpg?ve=1&tl=1",
+            "publishedAt": "2024-02-29T20:59:30Z",
+            "content": "It's almost time, ladies and gentlemen!\r\nThat long-awaited, fun-filled day when you wait to hear your team's name called before breaking out a pen and paper to fill out your NCAA Tournament bracket i… [+17577 chars]"
+        },
+        {
+            "source": {
+                "id": "bleacher-report",
+                "name": "Bleacher Report"
+            },
+            "author": null,
+            "title": "New Micah Parsons Show ",
+            "description": "Fan easier, fan faster and fan better with Bleacher Report. Keep up with the latest storylines, expert analysis, highlights and scores for all your favorite sports.",
+            "url": "https://bleacherreport.com/videos/490566-the-edge-w-micah-parsons-ep-11-vod",
+            "urlToImage": null,
+            "publishedAt": "2023-11-27T20:37:24.6381564Z",
+            "content": null
+        },
+        {
+            "source": {
+                "id": "bleacher-report",
+                "name": "Bleacher Report"
+            },
+            "author": null,
+            "title": " Mikal Bridges Interview ",
+            "description": "Fan easier, fan faster and fan better with Bleacher Report. Keep up with the latest storylines, expert analysis, highlights and scores for all your favorite sports.",
+            "url": "https://bleacherreport.com/videos/491103-taylor-rooks-x-mikal-bridges-vod",
+            "urlToImage": null,
+            "publishedAt": "2023-11-27T20:37:24.3882176Z",
+            "content": "Nets star sits down with Taylor Rooks for exclusive convo."
+        }
+    ]
+}
