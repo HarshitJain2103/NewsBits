@@ -147,7 +147,7 @@ function ViewHistory({ user, isDarkMode }) {
 
             {/* Image */}
             <img
-              src={item.article.urlToImage || 'https://via.placeholder.com/100'}
+              src={item.article.urlToImage || 'https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg'}
               alt="thumbnail"
               style={{
                 width: '100px',
@@ -173,6 +173,7 @@ function ViewHistory({ user, isDarkMode }) {
                   whiteSpace: 'nowrap',
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
+                  width: 'calc(100% - 120px)',
                 }}
               >
                 {item.article.title}

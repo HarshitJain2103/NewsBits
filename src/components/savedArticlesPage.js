@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import NewsItems from './NewsItems';
-import { FaRegBookmark } from 'react-icons/fa'; // Adding an icon for better appeal
+import { FaRegBookmark, FaArrowRight, FaArrowLeft } from 'react-icons/fa'; // Importing arrow icons
 
 function SavedArticlesPage({ user, isDarkMode }) {
   const [bookmarks, setBookmarks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const articlesPerPage = 6;
 
   useEffect(() => {
     if (!user) return;
-    window.scrollTo(0, 0);
     const fetchBookmarks = async () => {
       try {
         const token = localStorage.getItem('token');
@@ -30,6 +31,11 @@ function SavedArticlesPage({ user, isDarkMode }) {
 
     fetchBookmarks();
   }, [user]);
+
+  useEffect(() => {
+    // Scroll to the top whenever currentPage changes
+    window.scrollTo(0, 0);
+  }, [currentPage]); // This will run whenever the currentPage changes
 
   if (!user) return <p className="text-center mt-4">Please log in to view your saved articles.</p>;
   if (loading) return <p className="text-center mt-4">Loading saved articles...</p>;
@@ -80,11 +86,20 @@ function SavedArticlesPage({ user, isDarkMode }) {
     </div>
   );
 
+  const indexOfLastArticle = currentPage * articlesPerPage;
+  const indexOfFirstArticle = indexOfLastArticle - articlesPerPage;
+  const currentArticles = bookmarks.slice(indexOfFirstArticle, indexOfLastArticle);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const isNextDisabled = indexOfLastArticle >= bookmarks.length;
+  const isPrevDisabled = currentPage === 1;
+
   return (
     <div className="container mt-4">
       <h2 className="mb-4">Saved Articles</h2>
       <div className="row">
-        {bookmarks.map((article, index) => (
+        {currentArticles.map((article, index) => (
           <div className="col-md-4 mb-4" key={index}>
             <NewsItems
               title={article.title}
@@ -99,6 +114,50 @@ function SavedArticlesPage({ user, isDarkMode }) {
             />
           </div>
         ))}
+      </div>
+
+      {/* Pagination */}
+      <div className="d-flex justify-content-between mt-4">
+        <button
+          className={`btn ${!isDarkMode ? 'btn-dark' : 'btn-light'} ${isPrevDisabled ? 'disabled' : ''}`}
+          onClick={() => paginate(currentPage - 1)}
+          disabled={isPrevDisabled}
+          style={{
+            padding: '10px 20px',
+            fontSize: '16px',
+            borderRadius: '25px',
+            border: '2px solid transparent',
+            background: !isDarkMode ? '#343a40' : '#f8f9fa',
+            color: !isDarkMode ? '#ffffff' : '#212529',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            transition: 'all 0.3s ease',
+          }}
+        >
+          <FaArrowLeft style={{ marginRight: '8px' }} />
+          Previous
+        </button>
+        <button
+          className={`btn ${!isDarkMode ? 'btn-dark' : 'btn-light'} ${isNextDisabled ? 'disabled' : ''}`}
+          onClick={() => paginate(currentPage + 1)}
+          disabled={isNextDisabled}
+          style={{
+            padding: '10px 20px',
+            fontSize: '16px',
+            borderRadius: '25px',
+            border: '2px solid transparent',
+            background: !isDarkMode ? '#343a40' : '#f8f9fa',
+            color: !isDarkMode ? '#ffffff' : '#212529',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            transition: 'all 0.3s ease',
+          }}
+        >
+          Next
+          <FaArrowRight style={{ marginLeft: '8px' }} />
+        </button>
       </div>
     </div>
   );

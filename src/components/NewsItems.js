@@ -140,7 +140,7 @@ const NewsItems = ({
         }}
       >
         <img
-          src={imageUrl || "https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?auto=compress&cs=tinysrgb&w=600"}
+          src={imageUrl || "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg"}
           className="card-img-top"
           alt="..."
           style={{ height: "180px", objectFit: "cover" }}
@@ -172,7 +172,7 @@ const NewsItems = ({
               color: isDarkMode ? '#ffffff' : '#000000',
             }}
           >
-            {description}
+            {description ? description : "Description not available!"}
           </p>
 
           <div className="d-flex justify-content-between align-items-center mt-auto">
