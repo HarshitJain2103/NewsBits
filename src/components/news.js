@@ -18,24 +18,25 @@ const News = ({ isDarkMode, user, searchQuery, pageSize }) => {
 
   // Fetch news articles
   const fetchNews = useCallback(async () => {
-    const baseUrl = 'https://newsapi.org/v2/';
-    const url = query
-      ? `${baseUrl}everything?q=${query}&apiKey=${apiKey}&page=${page}&pageSize=${pageSize}`
-      : `${baseUrl}top-headlines?country=us&apiKey=${apiKey}&page=${page}&pageSize=${pageSize}`;
+  const baseUrl = '/.netlify/functions/getNews';
+  const url = query
+    ? `${baseUrl}?q=${query}&page=${page}&pageSize=${pageSize}`
+    : `${baseUrl}?page=${page}&pageSize=${pageSize}`;
 
-    setLoading(true);
-    try {
-      const response = await fetch(url);
-      const data = await response.json();
-      setArticles(data.articles || []);
-      setTotalResults(data.totalResults || 0);
-      setShouldFetchReactions(true);
-    } catch (error) {
-      console.error('Error fetching news:', error);
-    } finally {
-      setLoading(false);
-    }
-  }, [query, page, pageSize]);
+  setLoading(true);
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    setArticles(data.articles || []);
+    setTotalResults(data.totalResults || 0);
+    setShouldFetchReactions(true);
+  } catch (error) {
+    console.error('Error fetching news:', error);
+  } finally {
+    setLoading(false);
+  }
+}, [query, page, pageSize]);
+
 
   // Fetch saved articles
   const fetchSavedArticles = useCallback(async () => {
