@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import NewsItems from './NewsItems';
 import Spinner from './spinner';
 import PaginationBullets from './paginationBullets';
+const apiKey = process.env.REACT_APP_NEWS_API_KEY;
 
 const News = ({ isDarkMode, user, searchQuery, pageSize }) => {
   const [articles, setArticles] = useState([]);
@@ -13,7 +14,7 @@ const News = ({ isDarkMode, user, searchQuery, pageSize }) => {
   const [reactionStats, setReactionStats] = useState({});
   const [shouldFetchReactions, setShouldFetchReactions] = useState(false);
 
-  const apiKey = '1664c6c53b5b458091fa62d2b49fae41';
+
 
   // Fetch news articles
   const fetchNews = useCallback(async () => {
