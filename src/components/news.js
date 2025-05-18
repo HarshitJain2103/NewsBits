@@ -10,10 +10,12 @@ const News = ({ isDarkMode, user, searchQuery, pageSize }) => {
   const [query, setQuery] = useState(searchQuery || '');
   const [totalResults, setTotalResults] = useState(0);
   const [savedArticles, setSavedArticles] = useState([]);
+  const [reactionStats, setReactionStats] = useState({});
+  const [shouldFetchReactions, setShouldFetchReactions] = useState(false);
 
   const apiKey = '1664c6c53b5b458091fa62d2b49fae41';
 
-  // Fetching news articles
+  // Fetch news articles
   const fetchNews = useCallback(async () => {
     const baseUrl = 'https://newsapi.org/v2/';
     const url = query
@@ -26,6 +28,7 @@ const News = ({ isDarkMode, user, searchQuery, pageSize }) => {
       const data = await response.json();
       setArticles(data.articles || []);
       setTotalResults(data.totalResults || 0);
+      setShouldFetchReactions(true);
     } catch (error) {
       console.error('Error fetching news:', error);
     } finally {
@@ -33,46 +36,87 @@ const News = ({ isDarkMode, user, searchQuery, pageSize }) => {
     }
   }, [query, page, pageSize]);
 
-  // Fetching saved articles when the user is logged in
+  // Fetch saved articles
   const fetchSavedArticles = useCallback(async () => {
-  const token = localStorage.getItem('token');
-  if (!token) return;
+    const token = localStorage.getItem('token');
+    if (!token) return;
 
-  try {
-    const response = await fetch('http://localhost:8000/api/saved/saved', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    try {
+      const response = await fetch('http://localhost:8000/api/saved/saved', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-    const data = await response.json();
-    console.log("Saved articles response:", data); // Shows the array directly
-
-    if (Array.isArray(data)) {
-      setSavedArticles(data);
-      console.log("Updated saved articles:", data);
-    } else {
-      console.log("Unexpected saved articles format:", data);
+      const data = await response.json();
+      if (Array.isArray(data)) {
+        setSavedArticles(data);
+      } else {
+        console.log("Unexpected saved articles format:", data);
+      }
+    } catch (error) {
+      console.error('Error fetching saved articles:', error);
     }
-  } catch (error) {
-    console.error('Error fetching saved articles:', error);
-  }
-}, []);
+  }, []);
 
+  // Fetch reactions for all articles
+  const fetchReactionsForArticles = useCallback(async (articles) => {
+    const token = localStorage.getItem('token');
+    if (!token) return;
 
-  // Refetch news when query, country, or page changes
+    const newStats = {};
+
+    await Promise.all(
+      articles.map(async (article) => {
+        try {
+          const response = await fetch(
+            `http://localhost:8000/api/reactions/${encodeURIComponent(article.url)}/stats`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          const data = await response.json();
+          newStats[article.url] = data;
+        } catch (err) {
+          console.error('Error fetching reaction stats:', err);
+        }
+      })
+    );
+
+    setReactionStats(newStats);
+  }, []);
+
+  const updateReactionStatsForUrl = (url, updatedData) => {
+    setReactionStats(prevStats => ({
+      ...prevStats,
+      [url]: updatedData,
+    }));
+  };
+
+  // Fetch news when query/page changes
   useEffect(() => {
     fetchNews();
   }, [fetchNews]);
 
-  // Refetch saved articles when user is logged in or changes
+  // Fetch saved articles on user login
   useEffect(() => {
     if (user) {
       fetchSavedArticles();
     } else {
-      setSavedArticles([]); // clear saved articles on logout
+      setSavedArticles([]);
+      setReactionStats({});
     }
   }, [user, fetchSavedArticles]);
+
+  // NEW useEffect to fetch reaction stats only when articles change AND shouldFetchReactions is true
+  useEffect(() => {
+    if (user && articles.length > 0 && shouldFetchReactions) {
+      fetchReactionsForArticles(articles);
+      setShouldFetchReactions(false); 
+    }
+  }, [user, articles, shouldFetchReactions, fetchReactionsForArticles]);
 
   // Update query and reset page on searchQuery prop change
   useEffect(() => {
@@ -80,7 +124,7 @@ const News = ({ isDarkMode, user, searchQuery, pageSize }) => {
     setPage(1);
   }, [searchQuery]);
 
-  // Saving article to the backend
+  // Save article
   const saveArticleToBackend = async (article) => {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -112,20 +156,14 @@ const News = ({ isDarkMode, user, searchQuery, pageSize }) => {
     }
   };
 
-
-  // Pagination functions
   const handlePrevClick = () => setPage((prevPage) => prevPage - 1);
   const handleNextClick = () => setPage((prevPage) => prevPage + 1);
 
-  // Memoizing saved URLs for faster lookup in the render cycle
   const savedUrls = useMemo(() => new Set(savedArticles.map((a) => a.url)), [savedArticles]);
 
   return (
     <div className="container my-5" style={{ paddingTop: '30px' }}>
-      <h1 className="mt-2 pt-2">
-        Top Headlines
-      </h1>
-
+      <h1 className="mt-2 pt-2">Top Headlines</h1>
       {loading && <Spinner />}
       <div className="row">
         {!loading &&
@@ -142,6 +180,8 @@ const News = ({ isDarkMode, user, searchQuery, pageSize }) => {
                 source={element.source}
                 publishedAt={element.publishedAt}
                 isBookmarked={savedUrls.has(element.url)}
+                reactions={reactionStats[element.url] || { likes: 0, dislikes: 0, userReaction: null }}
+                onReactionUpdate={updateReactionStatsForUrl}
               />
             </div>
           ))}

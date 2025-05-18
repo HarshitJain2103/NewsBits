@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.9.0",
     "bootstrap-icons": "^1.12.1",
+    "canvas-confetti": "^1.9.3",
     "framer-motion": "^12.10.0",
     "jwt-decode": "^4.0.0",
     "lucide-react": "^0.509.0",

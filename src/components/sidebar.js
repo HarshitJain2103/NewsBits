@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaTimes, FaBookmark, FaHistory, FaFireAlt, FaUserCircle } from 'react-icons/fa';
+import { FaTimes, FaBookmark, FaHistory, FaUserCircle } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import Alert from './alert.js';
 
@@ -34,21 +34,12 @@ function Sidebar({ isOpen, onClose, isDarkMode, user }) {
     {
       label: 'History',
       icon: <FaHistory />,
-      onClick: handleHistoryClick, // Updated to use handleHistoryClick
-    },
-    {
-      label: 'Trending',
-      icon: <FaFireAlt />,
-      onClick: () => {
-        onClose();
-        navigate('/trending');
-      },
+      onClick: handleHistoryClick,
     },
   ];
 
   return (
     <>
-      {/* Overlay */}
       {isOpen && (
         <div
           onClick={onClose}

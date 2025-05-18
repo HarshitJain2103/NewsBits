@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import NewsItems from './NewsItems';
 import { FaRegBookmark, FaArrowRight, FaArrowLeft } from 'react-icons/fa'; // Importing arrow icons
 
@@ -33,9 +33,8 @@ function SavedArticlesPage({ user, isDarkMode }) {
   }, [user]);
 
   useEffect(() => {
-    // Scroll to the top whenever currentPage changes
     window.scrollTo(0, 0);
-  }, [currentPage]); // This will run whenever the currentPage changes
+  }, [currentPage]); 
 
   if (!user) return <p className="text-center mt-4">Please log in to view your saved articles.</p>;
   if (loading) return <p className="text-center mt-4">Loading saved articles...</p>;
@@ -97,7 +96,7 @@ function SavedArticlesPage({ user, isDarkMode }) {
 
   return (
     <div className="container mt-4">
-      <h2 className="mb-4">Saved Articles</h2>
+      <h2 className="mt-5" style={{paddingTop:"20px"}}>Saved Articles</h2>
       <div className="row">
         {currentArticles.map((article, index) => (
           <div className="col-md-4 mb-4" key={index}>
@@ -111,6 +110,7 @@ function SavedArticlesPage({ user, isDarkMode }) {
               isDarkMode={isDarkMode}
               user={user}
               isBookmarked={true}
+              reactions={article.reactions}
             />
           </div>
         ))}

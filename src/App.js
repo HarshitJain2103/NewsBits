@@ -11,6 +11,7 @@ import { jwtDecode } from 'jwt-decode';
 import Alert from './components/alert'; 
 import ViewHistory from './components/viewHistory';
 import About from './components/about';
+
 function App() {
   const [user, setUser] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
@@ -117,7 +118,7 @@ function App() {
             <Signup
               setUser={setUser}
               isDarkMode={isDarkMode}
-              setAlertMessage={setAlertMessage} // optional: use alert in signup too
+              setAlertMessage={setAlertMessage}
             />
           }
         />
@@ -145,7 +146,7 @@ function App() {
             <Login
               setUser={setUser}
               isDarkMode={isDarkMode}
-              setAlertMessage={setAlertMessage} // ✅ Pass it here
+              setAlertMessage={setAlertMessage}
             />
           }
         />

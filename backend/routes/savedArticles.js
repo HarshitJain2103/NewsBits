@@ -1,17 +1,14 @@
 import express from 'express';
 import authMiddleware from '../middleware/authMiddleware.js';
 import User from '../models/user.js';
-
+import Reaction from '../models/reaction.js';
 const router = express.Router();
 
-// Save (bookmark) article
 router.post('/save', authMiddleware, async (req, res) => {
   const { title, description, url, urlToImage, source, publishedAt } = req.body;
 
   try {
     const user = await User.findById(req.user.id);
-
-    // Check if article is already bookmarked
     const alreadyBookmarked = user.bookmarks.some(article => article.url === url);
     if (alreadyBookmarked) {
       return res.status(400).json({ error: 'Article already bookmarked' });
@@ -31,12 +28,38 @@ router.post('/save', authMiddleware, async (req, res) => {
 router.get('/saved', authMiddleware, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
-    res.status(200).json(user.bookmarks);
+    if (!user) return res.status(404).json({ error: 'User not found' });
+
+    const userId = req.user.id;
+    const bookmarks = user.bookmarks;
+
+    const bookmarksWithReactions = await Promise.all(
+      bookmarks.map(async (article) => {
+        const reaction = await Reaction.findOne({ newsUrl: article.url });
+
+        const likes = reaction ? reaction.likedBy.length : 0;
+        const dislikes = reaction ? reaction.dislikedBy.length : 0;
+        const liked = reaction?.likedBy.includes(userId);
+        const disliked = reaction?.dislikedBy.includes(userId);
+
+        return {
+          ...article.toObject(),
+          reactions: {
+            likes,
+            dislikes,
+            userReaction: liked ? 'like' : disliked ? 'dislike' : null,
+          }
+        };
+      })
+    );
+
+    res.status(200).json(bookmarksWithReactions);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to retrieve bookmarks' });
   }
 });
+
 
 // Remove bookmarked article
 router.delete('/remove', authMiddleware, async (req, res) => {

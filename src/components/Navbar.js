@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { FaSun, FaMoon, FaSignOutAlt, FaBars } from 'react-icons/fa';
 
 export class Navbar extends Component {
   render() {
     const { user, handleLogout, currentRoute, toggleDarkMode, isDarkMode, toggleSidebar } = this.props;
-
     return (
       <nav
         className={`navbar navbar-expand-lg ${isDarkMode ? 'navbar-dark bg-dark' : 'navbar-light bg-light'} fixed-top`}
