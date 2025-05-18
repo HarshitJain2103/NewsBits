@@ -2,7 +2,6 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import NewsItems from './NewsItems';
 import Spinner from './spinner';
 import PaginationBullets from './paginationBullets';
-const apiKey = process.env.REACT_APP_NEWS_API_KEY;
 
 const News = ({ isDarkMode, user, searchQuery, pageSize }) => {
   const [articles, setArticles] = useState([]);
