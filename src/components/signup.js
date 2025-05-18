@@ -2,7 +2,7 @@ import { useState , useEffect } from "react";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 
-function Signup({ setUser, isDarkMode, setAlertMessage }) { // Accept setAlertMessage as prop
+function Signup({ setUser, isDarkMode, setAlertMessage }) {
     const [form, setForm] = useState({ username: '', email: '', password: '' , confirmPassword: ''});
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword , setShowConfirmPassword] = useState(false);
@@ -22,16 +22,16 @@ function Signup({ setUser, isDarkMode, setAlertMessage }) { // Accept setAlertMe
         e.preventDefault();
         try {
             if(form.password !== form.confirmPassword){
-                setAlertMessage("Passwords do not match!"); // Trigger global alert
+                setAlertMessage("Passwords do not match!");
                 return;
             }
             const res = await axios.post('http://localhost:8000/api/auth/signup', form);
             setUser(res.data.user);
             localStorage.setItem('token', res.data.token);
-            setAlertMessage('Signup Successful!'); // Trigger global alert
+            setAlertMessage('Signup Successful!');
             setTimeout(() => navigate('/'), 1000);
         } catch (error) {
-            setAlertMessage(error.response?.data?.message || 'Signup Failed!'); // Trigger global alert
+            setAlertMessage(error.response?.data?.message || 'Signup Failed!');
         }
     };
 
@@ -56,7 +56,7 @@ function Signup({ setUser, isDarkMode, setAlertMessage }) { // Accept setAlertMe
             >
                 <h2 className="text-center mb-4" style={{color: isDarkMode ? '#ffffff' : '#000000'}}>Signup</h2>
 
-                {/* Global alert is handled here */}
+                {/* Global alert */}
                 <form onSubmit={handleSubmit}>
                     <div className="mb-3">
                         <input

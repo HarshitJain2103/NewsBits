@@ -82,7 +82,7 @@ function Sidebar({ isOpen, onClose, isDarkMode, user }) {
           <div className="d-flex align-items-center">
             <FaUserCircle size={28} className="me-2" />
             <h5 className="mb-0" style={{ fontWeight: 600 }}>
-              {user ? user.username : 'Guest'}
+              {user ? user.username || "User" : 'Guest'}
             </h5>
           </div>
           <FaTimes

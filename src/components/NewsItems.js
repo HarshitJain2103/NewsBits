@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { FaBookmark, FaRegBookmark, FaThumbsUp, FaThumbsDown } from 'react-icons/fa';
 import Alert from "./alert";
 import axios from 'axios';
@@ -308,17 +308,15 @@ const handleDislike = async (newsUrl) => {
             <div className="d-flex">
               <button
                 className={`btn ${userReaction === 'like' ? 'text-primary' : ''}`}
-                onClick={() => { 
-                  handleLike(NewsUrl);
-                }}
+                onClick={() => { handleLike(NewsUrl); }}
                 style={{
                   background: 'transparent',
                   color: isDarkMode ? '#ffffff' : '#000000',
                   border: 'none',
                   fontSize: '1.4rem',
-                  padding: '0 10px',
+                  padding: '0 5px',              
                   zIndex: 2,
-                  marginRight: '5px',
+                  marginRight: '5px',            
                   display: 'flex',
                   alignItems: 'center',
                 }}
@@ -336,9 +334,8 @@ const handleDislike = async (newsUrl) => {
                   color: isDarkMode ? '#ffffff' : '#000000',
                   border: 'none',
                   fontSize: '1.4rem',
-                  padding: '0 10px',
+                  padding: '0 5px',             
                   zIndex: 2,
-                  marginLeft: '5px',
                   display: 'flex',
                   alignItems: 'center',
                 }}
@@ -348,21 +345,6 @@ const handleDislike = async (newsUrl) => {
                 <span style={{ marginLeft: '5px', fontSize: '1rem' }}>{dislikesCount}</span>
               </button>
             </div>
-            <button
-              className="btn"
-              onClick={handleBookmarkClick}
-              style={{
-                background: 'transparent',
-                border: 'none',
-                color: isSaved ? 'gold' : (isDarkMode ? '#ffffff' : '#000000'),
-                fontSize: '1.4rem',
-                paddingLeft: '0',
-              }}
-              title={isSaved ? "Remove Bookmark" : "Save Bookmark"}
-            >
-              {isSaved ? <FaBookmark /> : <FaRegBookmark />}
-            </button>
-
             <a
               href={NewsUrl}
               target="_blank"
@@ -376,6 +358,22 @@ const handleDislike = async (newsUrl) => {
             >
               Read More
             </a>
+            <button
+              className="btn"
+              onClick={handleBookmarkClick}
+              style={{
+                background: 'transparent',
+                border: 'none',
+                color: isSaved ? 'gold' : (isDarkMode ? '#ffffff' : '#000000'),
+                fontSize: '1.4rem',
+                paddingLeft: 0,
+                position: 'relative',
+                top: '-3px',      
+              }}
+              title={isSaved ? "Remove Bookmark" : "Save Bookmark"}
+            >
+              {isSaved ? <FaBookmark /> : <FaRegBookmark />}
+            </button>
           </div>
         </div>
       </div>

@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Trash2 , History } from 'lucide-react';
 
 function ViewHistory({ user, isDarkMode }) {
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [hoverIndex, setHoverIndex] = useState(null); // NEW
+  const [hoverIndex, setHoverIndex] = useState(null);
 
   useEffect(() => {
     if (!user) return;
@@ -38,9 +38,9 @@ function ViewHistory({ user, isDarkMode }) {
     <div
       className="text-center d-flex flex-column align-items-center justify-content-center"
       style={{
-        marginTop: '60px',  // Adjust the margin if needed
+        marginTop: '60px',
         backgroundColor: isDarkMode ? '#121212' : '#ffffff',
-        minHeight: '100vh',  // Full height minus navbar
+        minHeight: '100vh', 
         padding: '40px',
         borderRadius: '10px',
       }}
@@ -144,8 +144,6 @@ function ViewHistory({ user, isDarkMode }) {
                 <Trash2 size={24} />
               </button>
             )}
-
-            {/* Image */}
             <img
               src={item.article.urlToImage || 'https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg'}
               alt="thumbnail"
@@ -156,8 +154,6 @@ function ViewHistory({ user, isDarkMode }) {
                 borderRadius: '8px',
               }}
             />
-
-            {/* Text Content */}
             <div className="flex-grow-1">
               <a
                 href={item.article.url}
@@ -194,6 +190,7 @@ function ViewHistory({ user, isDarkMode }) {
               </p>
               <small style={{ color: isDarkMode ? '#888' : '#999' }}>
                 {item.article.source?.name || 'Unknown Source'} •{' '}
+                {"Viewed at - "}
                 {new Date(item.viewedAt).toLocaleString()}
               </small>
             </div>

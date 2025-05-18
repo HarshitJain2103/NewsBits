@@ -4,11 +4,11 @@ import Navbar from './components/Navbar';
 import News from './components/news';
 import Signup from './components/signup';
 import Login from './components/login';
-import { useState , useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Sidebar from './components/sidebar';
 import SavedArticlesPage from './components/savedArticlesPage';
 import { jwtDecode } from 'jwt-decode';
-import Alert from './components/alert'; 
+import Alert from './components/alert';
 import ViewHistory from './components/viewHistory';
 import About from './components/about';
 
@@ -18,7 +18,7 @@ function App() {
   const [triggerSearch, setTriggerSearch] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
-  const [alertMessage, setAlertMessage] = useState(''); 
+  const [alertMessage, setAlertMessage] = useState('');
   const location = useLocation();
 
   useEffect(() => {
@@ -28,23 +28,25 @@ function App() {
     }
 
     const token = localStorage.getItem('token');
+
     if (token) {
       try {
         const decoded = jwtDecode(token);
+        console.log('Decoded token:', decoded); 
         setUser({ username: decoded.username, userId: decoded.userId });
       } catch (err) {
-        console.log('Invalid token');
+        console.log('Invalid token:', err.message);
         localStorage.removeItem('token');
         setUser(null);
       }
     }
   }, []);
 
-  const toggleSidebar = () => setSidebarOpen(prev => !prev);
+  const toggleSidebar = () => setSidebarOpen((prev) => !prev);
   const handleSidebarClose = () => setSidebarOpen(false);
 
   const toggleDarkMode = () => {
-    setIsDarkMode(prevMode => {
+    setIsDarkMode((prevMode) => {
       const newMode = !prevMode;
       localStorage.setItem('darkMode', newMode);
       return newMode;
@@ -77,6 +79,7 @@ function App() {
         isDarkMode={isDarkMode}
         user={user}
       />
+
       <Navbar
         user={user}
         handleLogout={handleLogout}
@@ -89,7 +92,7 @@ function App() {
         toggleSidebar={toggleSidebar}
       />
 
-      {/*GLOBAL ALERT RENDERING */}
+      {/* GLOBAL ALERT RENDERING */}
       {alertMessage && (
         <Alert
           message={alertMessage}

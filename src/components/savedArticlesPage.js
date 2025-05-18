@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import NewsItems from './NewsItems';
-import { FaRegBookmark, FaArrowRight, FaArrowLeft } from 'react-icons/fa'; // Importing arrow icons
+import { FaRegBookmark, FaArrowRight, FaArrowLeft } from 'react-icons/fa';
+import {useNavigate } from 'react-router-dom';
 
 function SavedArticlesPage({ user, isDarkMode }) {
   const [bookmarks, setBookmarks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const articlesPerPage = 6;
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!user) return;
@@ -35,6 +37,12 @@ function SavedArticlesPage({ user, isDarkMode }) {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [currentPage]); 
+  useEffect(() => {
+  if (!user) {
+    // Redirect to login or homepage when user logs out or not logged in
+    navigate('/'); // or '/' if you want homepage
+  }
+}, [user, navigate]);
 
   if (!user) return <p className="text-center mt-4">Please log in to view your saved articles.</p>;
   if (loading) return <p className="text-center mt-4">Loading saved articles...</p>;
