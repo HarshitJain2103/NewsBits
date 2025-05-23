@@ -41,7 +41,7 @@ Welcome to **NewsBits**, a modern and dynamic news aggregator web app built with
 ## 🌐 Live Demo
 
 > Coming soon! Stay tuned for the hosted version of NewsBits.
-> 
+> , **Demo Video** : https://www.youtube.com/watch?v=xiWsRQ7FB1M
 ---
 
 ### 🧑‍💻 Credits
